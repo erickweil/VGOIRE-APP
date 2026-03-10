@@ -104,7 +104,7 @@ const SplashScreen = ({ onComplete, lang }: { onComplete: () => void, lang: Lang
         <div className="flex items-center gap-6 mb-4">
           <div className="w-32 h-32 bg-vgoire-blue rounded-[20%] flex items-center justify-center shadow-2xl shadow-black/50 overflow-hidden border-4 border-vgoire-gold/30">
             <img 
-              src="https://images.unsplash.com/photo-1559563458-527698bf5295?auto=format&fit=crop&q=80&w=512&h=512" 
+              src="/icon.png" 
               alt="VGOIRE Icon"
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
@@ -431,7 +431,7 @@ export default function App() {
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-vgoire-blue rounded-lg flex items-center justify-center shadow-lg overflow-hidden border border-vgoire-gold/30">
                     <img 
-                      src="https://images.unsplash.com/photo-1559563458-527698bf5295?auto=format&fit=crop&q=80&w=128&h=128" 
+                      src="/icon.png" 
                       alt="VGOIRE Logo"
                       className="w-full h-full object-cover"
                       referrerPolicy="no-referrer"
@@ -455,7 +455,7 @@ export default function App() {
                   <div className="flex items-center gap-6">
                     <div className="w-20 h-20 bg-vgoire-blue rounded-2xl flex items-center justify-center shadow-xl overflow-hidden border-2 border-vgoire-gold/30">
                       <img 
-                        src="https://images.unsplash.com/photo-1559563458-527698bf5295?auto=format&fit=crop&q=80&w=256&h=256" 
+                        src="/icon.png" 
                         alt="VGOIRE Icon"
                         className="w-full h-full object-cover"
                         referrerPolicy="no-referrer"
