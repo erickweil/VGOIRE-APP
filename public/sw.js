@@ -1,8 +1,8 @@
 const CACHE_NAME = 'vgoire-v1';
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/manifest.json'
+  '/VGOIRE-APP/',
+  '/VGOIRE-APP/index.html',
+  '/VGOIRE-APP/manifest.json'
 ];
 
 self.addEventListener('install', (event) => {
