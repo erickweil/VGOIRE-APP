@@ -23,10 +23,52 @@ import {
   LANGUAGES,
   Language,
   UI_STRINGS,
+  isSupportedLanguage,
   WHATSAPP_BASE_URL
 } from './constants';
 
 // --- Components ---
+
+const LANGUAGE_STORAGE_KEY = 'vgoire-language';
+
+const getServiceFromSearch = (search: string): Service | null => {
+  const serviceId = new URLSearchParams(search).get('service');
+
+  if (!serviceId) {
+    return null;
+  }
+
+  return SERVICES.find((service) => service.id === serviceId) ?? null;
+};
+
+const getPreferredLanguage = (): Language => {
+  const params = new URLSearchParams(window.location.search);
+  const languageFromUrl = params.get('lang');
+
+  if (isSupportedLanguage(languageFromUrl)) {
+    return languageFromUrl;
+  }
+
+  const storedLanguage = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+  if (isSupportedLanguage(storedLanguage)) {
+    return storedLanguage;
+  }
+
+  const browserLanguages = [navigator.language, ...navigator.languages];
+  for (const browserLanguage of browserLanguages) {
+    const normalizedLanguage = browserLanguage?.toLowerCase();
+    if (isSupportedLanguage(normalizedLanguage)) {
+      return normalizedLanguage;
+    }
+
+    const baseLanguage = normalizedLanguage?.split('-')[0];
+    if (isSupportedLanguage(baseLanguage)) {
+      return baseLanguage;
+    }
+  }
+
+  return 'en';
+};
 
 const LanguageSelector = ({ currentLang, onSelect }: { currentLang: Language, onSelect: (lang: Language) => void }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -229,7 +271,7 @@ const ServiceDetail = ({ service, lang, onBack, onLangChange }: { service: Servi
           <div className="mb-10">
             <h3 className="text-vgoire-gold font-bold uppercase tracking-widest text-sm mb-4 flex items-center gap-2">
               <Globe className="w-4 h-4" />
-              Gallery
+              {t.gallery ?? UI_STRINGS.en.gallery}
             </h3>
             <div className="grid grid-cols-2 gap-4">
               {service.slides.map((slide, idx) => (
@@ -316,8 +358,8 @@ const ServiceDetail = ({ service, lang, onBack, onLangChange }: { service: Servi
                 ))}
               </div>
               <div className="mt-12 pt-6 border-t border-white/10 flex justify-between items-center text-[10px] uppercase tracking-[0.2em] text-vgoire-gold/40 font-bold">
-                <span>Official VGOIRE Information Record</span>
-                <span>Verified & Secured</span>
+                <span>{t.officialRecord ?? UI_STRINGS.en.officialRecord}</span>
+                <span>{t.verifiedSecured ?? UI_STRINGS.en.verifiedSecured}</span>
               </div>
             </div>
           </div>
@@ -386,22 +428,36 @@ const ServiceDetail = ({ service, lang, onBack, onLangChange }: { service: Servi
 // --- Main App ---
 
 export default function App() {
-  const [showSplash, setShowSplash] = useState(true);
-  const [selectedService, setSelectedService] = useState<Service | null>(null);
-  const [lang, setLang] = useState<Language>('en');
+  const initialService = getServiceFromSearch(window.location.search);
+  const [showSplash, setShowSplash] = useState(() => initialService === null);
+  const [selectedService, setSelectedService] = useState<Service | null>(initialService);
+  const [lang, setLang] = useState<Language>(getPreferredLanguage);
   const [showPrivacy, setShowPrivacy] = useState(false);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const serviceId = params.get('service');
-    if (serviceId) {
-      const service = SERVICES.find(s => s.id === serviceId);
-      if (service) {
-        setSelectedService(service);
-        setShowSplash(false);
-      }
+    window.localStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
+  }, [lang]);
+
+  useEffect(() => {
+    if (showSplash) {
+      return;
     }
-  }, []);
+
+    const params = new URLSearchParams(window.location.search);
+
+    params.set('lang', lang);
+
+    if (selectedService) {
+      params.set('service', selectedService.id);
+    } else {
+      params.delete('service');
+    }
+
+    const nextSearch = params.toString();
+    const nextUrl = nextSearch ? `${window.location.pathname}?${nextSearch}` : window.location.pathname;
+
+    window.history.replaceState(window.history.state, '', nextUrl);
+  }, [lang, selectedService, showSplash]);
 
   const t = UI_STRINGS[lang];
   const isRtl = LANGUAGES.find(l => l.code === lang)?.dir === 'rtl';
@@ -492,7 +548,7 @@ export default function App() {
                   {t.visitWebsite}
                 </a>
                 <div className="text-center text-white/40 text-xs space-y-4">
-                  <p>© {new Date().getFullYear()} VGOIRE. All rights reserved.</p>
+                  <p>© {new Date().getFullYear()} VGOIRE. {t.allRightsReserved ?? UI_STRINGS.en.allRightsReserved}</p>
                   <button 
                     onClick={() => setShowPrivacy(true)}
                     className="text-vgoire-gold/60 hover:text-vgoire-gold underline transition-colors"
@@ -500,7 +556,7 @@ export default function App() {
                     {t.privacyPolicy}
                   </button>
                   <p className="font-medium text-vgoire-gold/40 tracking-widest uppercase">
-                    Excellence • Security • Quality
+                    {t.brandValues ?? UI_STRINGS.en.brandValues}
                   </p>
                 </div>
               </footer>
@@ -536,7 +592,7 @@ export default function App() {
                       onClick={() => setShowPrivacy(false)}
                       className="mt-8 w-full gold-button"
                     >
-                      Close
+                      {t.close ?? UI_STRINGS.en.close}
                     </button>
                   </motion.div>
                 </motion.div>

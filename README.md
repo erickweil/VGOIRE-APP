@@ -6,6 +6,15 @@ Disponível na Play Store: https://play.google.com/store/apps/details?id=com.vgo
 
 Online em: https://vgoire.github.io/VGOIRE-APP/
 
+## Deep Links
+
+O app aceita parâmetros de URL para abrir uma página específica já no idioma correto:
+
+- `?service=translations&lang=pt`
+- `?service=google_rates&lang=es`
+
+O idioma selecionado também é salvo localmente para ser reaplicado nas próximas visitas.
+
 ## Run Locally
 
 **Prerequisites:**  Node.js
