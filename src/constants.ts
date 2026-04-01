@@ -44,6 +44,9 @@ export const LANGUAGES: { code: Language; name: string; dir: 'ltr' | 'rtl' }[] =
   { code: 'el', name: 'Ελληνικά', dir: 'ltr' },
 ];
 
+export const isSupportedLanguage = (value: string | null | undefined): value is Language =>
+  LANGUAGES.some((language) => language.code === value);
+
 export const UI_STRINGS: Record<Language, any> = {
   en: {
     tagline: "Premium Global Solutions",
@@ -60,7 +63,13 @@ export const UI_STRINGS: Record<Language, any> = {
     partners: "OUR PARTNERS",
     questionsResponses: "QUESTIONS and RESPONSES",
     privacyPolicy: "Privacy Policy",
-    privacyContent: "VGOIRE is committed to protecting your privacy. This application does not collect personal data directly. Any information shared via WhatsApp or external links is handled by those respective platforms according to their own privacy policies. We do not share your information with third parties."
+    privacyContent: "VGOIRE is committed to protecting your privacy. This application does not collect personal data directly. Any information shared via WhatsApp or external links is handled by those respective platforms according to their own privacy policies. We do not share your information with third parties.",
+    gallery: "Gallery",
+    close: "Close",
+    officialRecord: "Official VGOIRE Information Record",
+    verifiedSecured: "Verified & Secured",
+    allRightsReserved: "All rights reserved.",
+    brandValues: "Excellence • Security • Quality"
   },
   es: {
     tagline: "Soluciones Globales Premium",
@@ -77,7 +86,13 @@ export const UI_STRINGS: Record<Language, any> = {
     partners: "NUESTROS SOCIOS",
     questionsResponses: "PREGUNTAS y RESPUESTAS",
     privacyPolicy: "Política de Privacidad",
-    privacyContent: "VGOIRE se compromete a proteger su privacidad. Esta aplicación no recopila datos personales directamente. Cualquier información compartida a través de WhatsApp o enlaces externos es manejada por esas plataformas respectivas de acuerdo con sus propias políticas de privacidad. No compartimos su información con terceros."
+    privacyContent: "VGOIRE se compromete a proteger su privacidad. Esta aplicación no recopila datos personales directamente. Cualquier información compartida a través de WhatsApp o enlaces externos es manejada por esas plataformas respectivas de acuerdo con sus propias políticas de privacidad. No compartimos su información con terceros.",
+    gallery: "Galería",
+    close: "Cerrar",
+    officialRecord: "Registro oficial de información de VGOIRE",
+    verifiedSecured: "Verificado y seguro",
+    allRightsReserved: "Todos los derechos reservados.",
+    brandValues: "Excelencia • Seguridad • Calidad"
   },
   pt: {
     tagline: "Soluções Globais Premium",
@@ -94,7 +109,13 @@ export const UI_STRINGS: Record<Language, any> = {
     partners: "NOSSOS PARCEIROS",
     questionsResponses: "PERGUNTAS e RESPOSTAS",
     privacyPolicy: "Política de Privacidade",
-    privacyContent: "A VGOIRE está comprometida em proteger sua privacidade. Este aplicativo não coleta dados pessoais diretamente. Qualquer informação compartilhada via WhatsApp ou links externos é tratada por essas respectivas plataformas de acordo com suas próprias políticas de privacidade. Não compartilhamos suas informações com terceiros."
+    privacyContent: "A VGOIRE está comprometida em proteger sua privacidade. Este aplicativo não coleta dados pessoais diretamente. Qualquer informação compartilhada via WhatsApp ou links externos é tratada por essas respectivas plataformas de acordo com suas próprias políticas de privacidade. Não compartilhamos suas informações com terceiros.",
+    gallery: "Galeria",
+    close: "Fechar",
+    officialRecord: "Registro oficial de informações da VGOIRE",
+    verifiedSecured: "Verificado e seguro",
+    allRightsReserved: "Todos os direitos reservados.",
+    brandValues: "Excelência • Segurança • Qualidade"
   },
   zh: {
     tagline: "优质全球解决方案",
